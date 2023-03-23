@@ -1,12 +1,13 @@
-
 import './App.css';
+import React from 'react';
+import Calculator from './Calculator';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-
+    <div>
+      <Calculator />
     </div>
   );
-}
+};
 
 export default App;
