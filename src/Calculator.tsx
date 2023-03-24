@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from './store'
 
 const Calculator: React.FC = () => {
-  const [result, setResult] = useState<number>(0);
-  const [num1, setNum1] = useState<string>('');
-  const [num2, setNum2] = useState<string>('');
+
+  const result = useSelector((state: RootState) => state.calculator.result);
+  const num1 = useSelector((state: RootState) => state.calculator.num1);
+  const num2 = useSelector((state: RootState) => state.calculator.num2);
+  const dispatch = useDispatch();
 
   const handleNumClick = (num: string) => {
     if (num1 === '') {
-      setNum1(num);
+      dispatch({ type: 'SET_NUM_1', payload: num });
     } else if (num2 === '') {
-      setNum2(num);
+      dispatch({ type: 'SET_NUM_2', payload: num });
     }
   };
 
   const handleAddition = () => {
-    setResult(Number(num1) + Number(num2));
-  };
-
-  const handleSubtraction = () => {
-    setResult(Number(num1) - Number(num2));
+    dispatch({ type: 'SET_RESULT', payload: Number(num1) + Number(num2) });
+  }; const handleSubtraction = () => {
+    dispatch({ type: 'SET_RESULT', payload: Number(num1) - Number(num2) });
   };
 
   const handleMultiplication = () => {
-    setResult(Number(num1) * Number(num2));
+    dispatch({ type: 'SET_RESULT', payload: Number(num1) * Number(num2) });
   };
 
   const handleDivision = () => {
-    setResult(Number(num1) / Number(num2));
+    dispatch({ type: 'SET_RESULT', payload: Number(num1) / Number(num2) });
   };
 
   return (
@@ -63,4 +64,7 @@ const Calculator: React.FC = () => {
 };
 
 export default Calculator;
+
+
+
 
