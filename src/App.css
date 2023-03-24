@@ -1,3 +1,35 @@
 .App {
-  text-align: center;
+  width: fit-content;
+  border: 1mm solid black;
+}
+
+.btn {
+  height: 60px;
+  width: 60px;
+}
+
+.b {
+  height: 120px;
+  width: 60px;
+}
+
+.bb {
+  height: 180px;
+  width: 60px;
+}
+
+#display {
+  height: 5vh;
+  border-bottom: 1mm solid black;
+
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.slimm-col {
+  display: flex;
+  flex-direction: column;
 }

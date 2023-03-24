@@ -4,7 +4,7 @@ import Calculator from './Calculator';
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className='App'>
       <Calculator />
     </div>
   );
