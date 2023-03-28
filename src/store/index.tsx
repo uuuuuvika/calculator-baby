@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from 'redux';
-import calculatorReducer from './CalculatorReducer';
+import calculatorReducer from '../CalculatorReducer';
 
 const rootReducer = combineReducers({
   calculator: calculatorReducer,

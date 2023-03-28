@@ -1,77 +1,83 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from './store';
-import { setNum1, setNum2 } from './CalculatorReducer'
+import { RootState } from './store/index';
+import { CalculatorState } from './CalculatorReducer'
+
 
 const Calculator: React.FC = () => {
-  const [operator, setOperator] = useState('');
-  const [displayValue, setDisplayValue] = useState('');
 
-  const result = useSelector((state: RootState) => state.calculator.result);
-  const num1 = useSelector((state: RootState) => state.calculator.num1);
-  const num2 = useSelector((state: RootState) => state.calculator.num2);
+  // const [operator, setOperator] = useState('');
+  // const [displayValue, setDisplayValue] = useState('');
+  // const [currentValue, setCurrentValue] = useState('');
+
+  const [currentValue, setCurrentValue] = useState('');
   const dispatch = useDispatch();
 
-  const handleNumClick = (num: string) => {
-    if (operator === '') {
-      dispatch(setNum1(num));
-      setDisplayValue(displayValue + num);
-    } else {
-      dispatch(setNum2(num));
-      setDisplayValue(displayValue + num);
-    }
+  const result = useSelector((state: RootState) => state.calculator.result);
+  const operator = useSelector((state: RootState) => state.calculator.operator);
+  const num1 = useSelector((state: RootState) => state.calculator.num1);
+  const num2 = useSelector((state: RootState) => state.calculator.num2);
+
+  const handleClear = () => {
+    dispatch({ type: 'CLEAR' });
+    setCurrentValue('');
+  };
+
+  const handleNumClick = (value: string) => {
+    setCurrentValue(currentValue + value);
   };
 
   const handleDecimal = () => {
-    if (operator === '') {
-      if (num1 === '' || !num1.includes('.')) {
-        dispatch(setNum1('.'));
-        setDisplayValue(displayValue + '.');
-      }
-    } else {
-      if (num2 === '' || !num2.includes('.')) {
-        dispatch(setNum2('.'));
-        setDisplayValue(displayValue + '.');
-      }
+    if (currentValue.indexOf('.') === -1) {
+      setCurrentValue(currentValue + '.');
     }
   };
 
   const handleOperatorClick = (operator: string) => {
-    setOperator(operator);
-    setDisplayValue(displayValue + operator)
+    dispatch({ type: 'SET_OPERATOR', payload: operator });
+    if (currentValue !== '') {
+      dispatch({ type: 'SET_NUM_1', payload: currentValue });
+      dispatch({ type: 'SET_RESULT', payload: Number(currentValue) })
+      setCurrentValue('');
+    }
   };
 
   const handleEqualsClick = () => {
-    let result = 0;
+    let n2 = 0;
+    if (currentValue !== '') {
+      dispatch({ type: 'SET_NUM_2', payload: currentValue });
+      n2 = Number(currentValue);
+    }
+    let n1 = result;
+    let finalResult;
+
     switch (operator) {
       case '+':
-        result = Number(num1) + Number(num2);
+        finalResult = n1 + n2;
         break;
       case '-':
-        result = Number(num1) - Number(num2);
+        finalResult = n1 - n2;
         break;
       case '*':
-        result = Number(num1) * Number(num2);
+        finalResult = n1 * n2;
         break;
       case '/':
-        result = Number(num1) / Number(num2);
+        finalResult = n1 / n2;
         break;
       default:
         break;
     }
-    dispatch({ type: 'SET_RESULT', payload: result });
-    setOperator('');
-    setDisplayValue(result.toString());
-  };
-
-  const handleClear = () => {
-    dispatch({ type: 'CLEAR' });
-    setDisplayValue('');
+    setCurrentValue(String(finalResult));
+    console.log(currentValue)
+    dispatch({ type: 'SET_RESULT', payload: finalResult });
+    dispatch({ type: 'SET_NUM_1', payload: '' });
+    dispatch({ type: 'SET_NUM_2', payload: '' });
+    dispatch({ type: 'SET_OPERATOR', payload: '' });
   };
 
   return (
     <div>
-      <div id="display">{displayValue}</div>
+      <div id="display">{currentValue.length === 0 ? '' : currentValue}</div>
       <div className='buttons'>
         <div>
           <div>

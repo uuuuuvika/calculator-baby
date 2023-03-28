@@ -1,67 +1,36 @@
+import { CalculatorAction } from './store/actions'
 
-export const setNum1 = (num: string) => {
-  return {
-    type: 'SET_NUM_1',
-    payload: num,
-  };
-};
-
-export const setNum2 = (num: string) => {
-  return {
-    type: 'SET_NUM_2',
-    payload: num,
-  };
-};
-
-interface Clear {
-  type: 'CLEAR'
-}
-
-interface CalculatorState {
-  result: number;
+export interface CalculatorState {
   num1: string;
   num2: string;
   operator: string;
+  result: number
 }
 
-interface SetNum1Action {
-  type: 'SET_NUM_1';
-  payload: string;
-}
-
-interface SetNum2Action {
-  type: 'SET_NUM_2';
-  payload: string;
-}
-
-interface SetResultAction {
-  type: 'SET_RESULT';
-  payload: number;
-}
-
-type CalculatorAction = SetNum1Action | SetNum2Action | SetResultAction | Clear;
-
-const initialState: CalculatorState = {
+const initialState = {
   num1: "",
   num2: "",
   operator: "",
   result: 0,
 };
 
-export const calculatorReducer = (state = initialState, action: CalculatorAction) => {
+const calculatorReducer = (state = initialState, action: CalculatorAction) => {
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case 'SET_NUM_1':
       return { ...state, num1: state.num1 + action.payload };
     case 'SET_NUM_2':
       return { ...state, num2: state.num2 + action.payload };
-    // case 'SET_OPERATOR':
-    //     return {...state, operator: action.payload };
+    case 'SET_OPERATOR':
+      return { ...state, operator: action.payload };
     case 'SET_RESULT':
+      console.log(action.payload);
       return { ...state, result: action.payload };
     case 'CLEAR':
       return {
-        num1: '',
-        num2: '',
+        num1: "",
+        num2: "",
         operator: '',
         result: 0
       };

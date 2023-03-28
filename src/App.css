@@ -1,6 +1,12 @@
 .App {
   width: fit-content;
   border: 1mm solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+
 }
 
 .btn {
