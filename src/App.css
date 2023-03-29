@@ -1,33 +1,43 @@
+@import "claymorphism-css/dist/clay.scss";
+
 .App {
-  width: fit-content;
-  border: 1mm solid black;
+  padding: 1.5%;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%);
+  --clay-border-radius: 25px;
+  background-color: aquamarine;
+}
 
+.inner {
+  width: fit-content;
 }
 
 .btn {
   height: 60px;
   width: 60px;
+  --clay-border-radius: 20px;
+  border: 3mm;
 }
 
 .b {
   height: 120px;
   width: 60px;
+  --clay-border-radius: 20px;
+  border: 3mm;
 }
 
 .bb {
   height: 180px;
   width: 60px;
+  --clay-border-radius: 20px;
+  border: 3mm;
 }
 
 #display {
   height: 5vh;
-  border-bottom: 1mm solid black;
-
 }
 
 .buttons {

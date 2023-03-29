@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './store/index';
-import { CalculatorState } from './CalculatorReducer'
 
 
 const Calculator: React.FC = () => {
 
-  // const [operator, setOperator] = useState('');
-  // const [displayValue, setDisplayValue] = useState('');
-  // const [currentValue, setCurrentValue] = useState('');
-
+  const [displayValue, setDisplayValue] = useState('');
   const [currentValue, setCurrentValue] = useState('');
   const dispatch = useDispatch();
 
@@ -21,15 +17,18 @@ const Calculator: React.FC = () => {
   const handleClear = () => {
     dispatch({ type: 'CLEAR' });
     setCurrentValue('');
+    setDisplayValue('');
   };
 
   const handleNumClick = (value: string) => {
     setCurrentValue(currentValue + value);
+    setDisplayValue(currentValue + value);
   };
 
   const handleDecimal = () => {
     if (currentValue.indexOf('.') === -1) {
       setCurrentValue(currentValue + '.');
+      setDisplayValue(currentValue + '.');
     }
   };
 
@@ -38,6 +37,7 @@ const Calculator: React.FC = () => {
     if (currentValue !== '') {
       dispatch({ type: 'SET_NUM_1', payload: currentValue });
       dispatch({ type: 'SET_RESULT', payload: Number(currentValue) })
+      setDisplayValue(operator);
       setCurrentValue('');
     }
   };
@@ -49,7 +49,7 @@ const Calculator: React.FC = () => {
       n2 = Number(currentValue);
     }
     let n1 = result;
-    let finalResult;
+    let finalResult = result;
 
     switch (operator) {
       case '+':
@@ -68,47 +68,49 @@ const Calculator: React.FC = () => {
         break;
     }
     setCurrentValue(String(finalResult));
-    console.log(currentValue)
+    console.log(currentValue);
     dispatch({ type: 'SET_RESULT', payload: finalResult });
-    dispatch({ type: 'SET_NUM_1', payload: '' });
-    dispatch({ type: 'SET_NUM_2', payload: '' });
-    dispatch({ type: 'SET_OPERATOR', payload: '' });
+    setDisplayValue(String(finalResult));
+    // setnum1! setnum2!
+    //dispatch({ type: 'SET_NUM_1', payload: '' });
+    //dispatch({ type: 'SET_NUM_2', payload: '' });
+    //dispatch({ type: 'SET_OPERATOR', payload: '' });
   };
 
   return (
-    <div>
-      <div id="display">{currentValue.length === 0 ? '' : currentValue}</div>
+    <div className='inner'>
+      <div id="display">{displayValue.length === 0 ? '0' : displayValue}</div>
       <div className='buttons'>
         <div>
           <div>
-            <button id='one' className='btn' onClick={() => handleNumClick('1')}>1</button>
-            <button id='two' className='btn' onClick={() => handleNumClick('2')}>2</button>
-            <button id='three' className='btn' onClick={() => handleNumClick('3')}>3</button>
+            <button id='one' className='btn clay' onClick={() => handleNumClick('1')}>1</button>
+            <button id='two' className='btn clay' onClick={() => handleNumClick('2')}>2</button>
+            <button id='three' className='btn clay' onClick={() => handleNumClick('3')}>3</button>
           </div>
           <div>
-            <button id='four' className='btn' onClick={() => handleNumClick('4')}>4</button>
-            <button id='five' className='btn' onClick={() => handleNumClick('5')}>5</button>
-            <button id='six' className='btn' onClick={() => handleNumClick('6')}>6</button>
+            <button id='four' className='btn clay' onClick={() => handleNumClick('4')}>4</button>
+            <button id='five' className='btn clay' onClick={() => handleNumClick('5')}>5</button>
+            <button id='six' className='btn clay' onClick={() => handleNumClick('6')}>6</button>
           </div>
           <div>
-            <button id='seven' className='btn' onClick={() => handleNumClick('7')}>7</button>
-            <button id='eight' className='btn' onClick={() => handleNumClick('8')}>8</button>
-            <button id='nine' className='btn' onClick={() => handleNumClick('9')}>9</button>
+            <button id='seven' className='btn clay' onClick={() => handleNumClick('7')}>7</button>
+            <button id='eight' className='btn clay' onClick={() => handleNumClick('8')}>8</button>
+            <button id='nine' className='btn clay' onClick={() => handleNumClick('9')}>9</button>
           </div>
           <div>
-            <button id='zero' className='btn' onClick={() => handleNumClick('0')}>0</button>
-            <button id="decimal" className='btn' onClick={() => handleDecimal()}>.</button>
-            <button id='divide' className='btn' onClick={() => handleOperatorClick('/')}>/</button>
+            <button id='zero' className='btn clay' onClick={() => handleNumClick('0')}>0</button>
+            <button id="decimal" className='btn clay' onClick={() => handleDecimal()}>.</button>
+            <button id='divide' className='btn clay' onClick={() => handleOperatorClick('/')}>/</button>
           </div>
           <div>
-            <button id='add' className='btn' onClick={() => handleOperatorClick('+')}>+</button>
-            <button id='subtract' className='btn' onClick={() => handleOperatorClick('-')}>-</button>
-            <button id='multiply' className='btn' onClick={() => handleOperatorClick('*')}>*</button>
+            <button id='add' className='btn clay' onClick={() => handleOperatorClick('+')}>+</button>
+            <button id='subtract' className='btn clay' onClick={() => handleOperatorClick('-')}>-</button>
+            <button id='multiply' className='btn clay' onClick={() => handleOperatorClick('*')}>*</button>
           </div>
         </div>
         <div className='slimm-col'>
-          <button id="clear" className='b' onClick={() => handleClear()}>C</button>
-          <button id="equals" className='bb' onClick={handleEqualsClick}>=</button>
+          <button id="clear" className='b clay' onClick={() => handleClear()}>C</button>
+          <button id="equals" className='bb clay' onClick={handleEqualsClick}>=</button>
         </div>
       </div>
     </div>
