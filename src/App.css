@@ -1,4 +1,8 @@
 @import "claymorphism-css/dist/clay.scss";
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+* {
+  font-family: 'Bangers', cursive;
+}
 
 .App {
   padding: 1.5%;
@@ -7,37 +11,48 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+  width: 280px;
   --clay-border-radius: 25px;
-  background-color: aquamarine;
-}
-
-.inner {
-  width: fit-content;
+  background-color: rgb(98, 255, 0);
 }
 
 .btn {
   height: 60px;
   width: 60px;
-  --clay-border-radius: 20px;
-  border: 3mm;
+  --clay-border-radius: 16px;
+  border: 1mm;
+  background-color: rgb(217, 255, 0);
+  margin: 4px;
+  box-shadow: 3px 3px 4px rgb(0, 115, 61);
 }
 
 .b {
-  height: 120px;
+  height: 128px;
   width: 60px;
-  --clay-border-radius: 20px;
+  --clay-border-radius: 16px;
   border: 3mm;
+  margin-left: 3mm;
+  background-color: rgb(217, 255, 0);
+  box-shadow: 3px 3px 4px rgb(0, 81, 43);
 }
 
 .bb {
-  height: 180px;
+  height: 196px;
   width: 60px;
-  --clay-border-radius: 20px;
+  --clay-border-radius: 16px;
   border: 3mm;
+  margin-left: 3mm;
+  background-color: rgb(217, 255, 0);
+  box-shadow: 3px 3px 4px rgb(0, 81, 43);
 }
 
 #display {
+  font-size: 1.5em;
   height: 5vh;
+  background-color: rgb(58, 58, 58);
+  box-shadow: -3px -4px 2px rgb(0, 0, 0);
+  margin-bottom: 4mm;
+  border-radius: 10px;
 }
 
 .buttons {
@@ -48,4 +63,7 @@
 .slimm-col {
   display: flex;
   flex-direction: column;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  justify-content: space-between;
 }

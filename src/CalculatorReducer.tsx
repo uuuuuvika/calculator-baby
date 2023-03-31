@@ -1,39 +1,65 @@
 import { CalculatorAction } from './store/actions'
 
-export interface CalculatorState {
-  num1: string;
-  num2: string;
-  operator: string;
-  result: number
+export function calculateTotal(state: Expr | number): number {
+  if (typeof state === 'number') {
+    return state;
+  }
+  const { num1, num2, operator } = state;
+  if (num2 === null) {
+    return calculateTotal(num1);
+  }
+  switch (operator) {
+    case '+':
+      return calculateTotal(num1) + calculateTotal(num2);
+    case '-':
+      return calculateTotal(num1) - calculateTotal(num2);
+    case '*':
+      return calculateTotal(num1) * calculateTotal(num2);
+    case '/':
+      return calculateTotal(num1) / calculateTotal(num2);
+    default:
+      return 0;
+  }
 }
 
-const initialState = {
-  num1: "",
-  num2: "",
-  operator: "",
-  result: 0,
-};
+export interface Expr {
+  num1: Expr | number;
+  num2: number | null;
+  operator: string;
+}
 
-const calculatorReducer = (state = initialState, action: CalculatorAction) => {
-  console.log(state);
-  console.log(action);
+const initialState: Expr | number = 0;
+
+const calculatorReducer = (state: Expr | number = initialState, action: CalculatorAction) => {
+  console.log(state, "STATE");
+  console.log(action, "ACTION");
   switch (action.type) {
-    case 'SET_NUM_1':
-      return { ...state, num1: state.num1 + action.payload };
-    case 'SET_NUM_2':
-      return { ...state, num2: state.num2 + action.payload };
+    case 'ADD_DIGIT':
+      if (typeof state === 'number') {
+        return Number(String(state) + action.payload);
+      } else {
+        return {
+          ...state,
+          num2: Number(String(state.num2 || "0") + action.payload)
+        }
+      }
     case 'SET_OPERATOR':
-      return { ...state, operator: action.payload };
-    case 'SET_RESULT':
-      console.log(action.payload);
-      return { ...state, result: action.payload };
+      if (typeof state === 'object') {
+        return {
+          ...state,
+          operator: action.payload
+        }
+      } else {
+        return {
+          num1: state,
+          num2: null,
+          operator: action.payload
+        }
+      }
+    case 'CALCULATE_TOTAL':
+      return state = calculateTotal(state);
     case 'CLEAR':
-      return {
-        num1: "",
-        num2: "",
-        operator: '',
-        result: 0
-      };
+      return initialState;
     default:
       return state;
   }

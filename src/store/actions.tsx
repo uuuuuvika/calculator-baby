@@ -1,29 +1,17 @@
 
-export interface SetNum1Action {
-
-    type: 'SET_NUM_1',
+export interface SetDigit {
+    type: 'ADD_DIGIT',
     payload: string,
-
-}
-
-export interface SetNum2Action {
-
-    type: 'SET_NUM_2',
-    payload: string,
-
-}
-
-export interface SetResultAction {
-    type: 'SET_RESULT',
-    payload: number,
-
 }
 
 export interface SetOperator {
-
     type: 'SET_OPERATOR',
     payload: string,
 
+}
+
+export interface SetTotal {
+    type: 'CALCULATE_TOTAL',
 }
 
 export interface Clear {
@@ -32,4 +20,4 @@ export interface Clear {
 
 
 
-export type CalculatorAction = SetNum1Action | SetNum2Action | SetResultAction | Clear| SetOperator;
+export type CalculatorAction = SetDigit | Clear| SetOperator | SetTotal;

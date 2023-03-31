@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './store/index';
 
-
 const Calculator: React.FC = () => {
-
   const [displayValue, setDisplayValue] = useState('');
   const [currentValue, setCurrentValue] = useState('');
   const dispatch = useDispatch();
-
-  const result = useSelector((state: RootState) => state.calculator.result);
-  const operator = useSelector((state: RootState) => state.calculator.operator);
-  const num1 = useSelector((state: RootState) => state.calculator.num1);
-  const num2 = useSelector((state: RootState) => state.calculator.num2);
+  const total = useSelector((state: RootState) => state.calculator);
 
   const handleClear = () => {
     dispatch({ type: 'CLEAR' });
@@ -21,67 +15,33 @@ const Calculator: React.FC = () => {
   };
 
   const handleNumClick = (value: string) => {
+    dispatch({ type: 'ADD_DIGIT', payload: value });
+    dispatch({ type: 'CALCULATE_TOTAL' });
     setCurrentValue(currentValue + value);
     setDisplayValue(currentValue + value);
   };
 
+  //TO DO: fix the decimal !!
   const handleDecimal = () => {
-    if (currentValue.indexOf('.') === -1) {
-      setCurrentValue(currentValue + '.');
-      setDisplayValue(currentValue + '.');
-    }
+    setCurrentValue(currentValue + '.');
+    setDisplayValue(currentValue + '.');
   };
 
   const handleOperatorClick = (operator: string) => {
     dispatch({ type: 'SET_OPERATOR', payload: operator });
-    if (currentValue !== '') {
-      dispatch({ type: 'SET_NUM_1', payload: currentValue });
-      dispatch({ type: 'SET_RESULT', payload: Number(currentValue) })
-      setDisplayValue(operator);
-      setCurrentValue('');
-    }
+    setDisplayValue(operator);
+    setCurrentValue('');
   };
 
   const handleEqualsClick = () => {
-    let n2 = 0;
-    if (currentValue !== '') {
-      dispatch({ type: 'SET_NUM_2', payload: currentValue });
-      n2 = Number(currentValue);
-    }
-    let n1 = result;
-    let finalResult = result;
-
-    switch (operator) {
-      case '+':
-        finalResult = n1 + n2;
-        break;
-      case '-':
-        finalResult = n1 - n2;
-        break;
-      case '*':
-        finalResult = n1 * n2;
-        break;
-      case '/':
-        finalResult = n1 / n2;
-        break;
-      default:
-        break;
-    }
-    setCurrentValue(String(finalResult));
-    console.log(currentValue);
-    dispatch({ type: 'SET_RESULT', payload: finalResult });
-    setDisplayValue(String(finalResult));
-    // setnum1! setnum2!
-    //dispatch({ type: 'SET_NUM_1', payload: '' });
-    //dispatch({ type: 'SET_NUM_2', payload: '' });
-    //dispatch({ type: 'SET_OPERATOR', payload: '' });
+    setDisplayValue(String(total));
   };
 
   return (
     <div className='inner'>
       <div id="display">{displayValue.length === 0 ? '0' : displayValue}</div>
       <div className='buttons'>
-        <div>
+        <div className='fat-col'>
           <div>
             <button id='one' className='btn clay' onClick={() => handleNumClick('1')}>1</button>
             <button id='two' className='btn clay' onClick={() => handleNumClick('2')}>2</button>
