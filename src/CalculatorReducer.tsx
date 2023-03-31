@@ -37,6 +37,17 @@ const calculatorReducer = (state: Expr | number = initialState, action: Calculat
     case 'ADD_DIGIT':
       if (typeof state === 'number') {
         return Number(String(state) + action.payload);
+      } else if (typeof state === 'object' && state.num2 === -0 && action.payload.includes('.')) {
+        return {
+          ...state,
+          num2: Number('0' + action.payload),
+          operator: '-'
+        }
+      } else if (typeof state === 'object' && state.num2 === -0 && !action.payload.includes('.')) {
+        return {
+          ...state,
+          num2: Number(String(state.num2) + action.payload) * -1
+        }
       } else {
         return {
           ...state,
@@ -44,28 +55,29 @@ const calculatorReducer = (state: Expr | number = initialState, action: Calculat
         }
       }
     case 'SET_OPERATOR':
-      if (typeof state === 'object' && state.num2 === null && action.payload !== '-') {
+      if (typeof state === 'object' && state.num2 === null && action.payload !== '-' ) {
         return {
           ...state,
           operator: action.payload
         }
-      } else if (typeof state === 'object' && state.num2 === null && state.operator !== '-' && action.payload === '-') {
+      } else if (typeof state === 'object' && state.num2 === null && action.payload === '-' ) {
         return {
           ...state,
-          num1: Number('-' + String(state.num1))
+          num2: -0
         }
-      } else if (typeof state === 'object' && state.num2 === null && action.payload === '-') {
+      } else if (typeof state === 'object' && state.num2 === -0 ) {
         return {
           ...state,
-          num1: Number('-' + String(state.num1))
-        }
-
-      } else {
-        return {
-          num1: state,
           num2: null,
           operator: action.payload
         }
+      }
+      else {
+        return {
+              num1: state,
+              num2: null,
+              operator: action.payload
+             }
       }
     case 'CALCULATE_TOTAL':
       return state = calculateTotal(state);

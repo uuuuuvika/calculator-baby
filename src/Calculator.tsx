@@ -37,9 +37,16 @@ const Calculator: React.FC = () => {
     dispatch({ type: 'CALCULATE_TOTAL' });
   };
 
-  const displayValue = ((typeof state === 'number')
-    ? state 
-    : (state.num2 === null ? state.operator : state.num2))
+  const displayValue = (
+    (typeof state === 'number' && decimalOn === true)
+    ? state + '.' 
+    : typeof state === 'number'
+      ? state
+      : (state.num2 === null 
+        ? state.operator 
+        : decimalOn === true 
+         ? state.num2 + '.' 
+          : state.num2))
 
   return (
     <div className='inner'>
