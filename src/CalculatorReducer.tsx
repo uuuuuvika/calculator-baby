@@ -32,7 +32,7 @@ const initialState: Expr | number = 0;
 
 const calculatorReducer = (state: Expr | number = initialState, action: CalculatorAction) => {
   console.log(state, "STATE");
-  console.log(action, "ACTION");
+  //console.log(action, "ACTION");
   switch (action.type) {
     case 'ADD_DIGIT':
       if (typeof state === 'number') {
@@ -44,11 +44,22 @@ const calculatorReducer = (state: Expr | number = initialState, action: Calculat
         }
       }
     case 'SET_OPERATOR':
-      if (typeof state === 'object') {
+      if (typeof state === 'object' && state.num2 === null && action.payload !== '-') {
         return {
           ...state,
           operator: action.payload
         }
+      } else if (typeof state === 'object' && state.num2 === null && state.operator !== '-' && action.payload === '-') {
+        return {
+          ...state,
+          num1: Number('-' + String(state.num1))
+        }
+      } else if (typeof state === 'object' && state.num2 === null && action.payload === '-') {
+        return {
+          ...state,
+          num1: Number('-' + String(state.num1))
+        }
+
       } else {
         return {
           num1: state,

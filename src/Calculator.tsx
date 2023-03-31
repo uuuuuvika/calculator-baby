@@ -3,43 +3,47 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './store/index';
 
 const Calculator: React.FC = () => {
-  const [displayValue, setDisplayValue] = useState('');
-  const [currentValue, setCurrentValue] = useState('');
   const dispatch = useDispatch();
-  const total = useSelector((state: RootState) => state.calculator);
+  const state = useSelector((state: RootState) => state.calculator);
+  const [decimalOn, setDecimalOn] = useState(false);
 
   const handleClear = () => {
     dispatch({ type: 'CLEAR' });
-    setCurrentValue('');
-    setDisplayValue('');
   };
 
   const handleNumClick = (value: string) => {
-    dispatch({ type: 'ADD_DIGIT', payload: value });
-    dispatch({ type: 'CALCULATE_TOTAL' });
-    setCurrentValue(currentValue + value);
-    setDisplayValue(currentValue + value);
+    if (decimalOn === true && value === '.') {
+      return;
+    }
+    if (decimalOn === true) {
+      dispatch({ type: 'ADD_DIGIT', payload: '.' + value });
+      setDecimalOn(false)
+    } else {
+      dispatch({ type: 'ADD_DIGIT', payload: value });
+    }
   };
 
-  //TO DO: fix the decimal !!
   const handleDecimal = () => {
-    setCurrentValue(currentValue + '.');
-    setDisplayValue(currentValue + '.');
+    if (!decimalOn) {
+      setDecimalOn(true);
+    }
   };
 
   const handleOperatorClick = (operator: string) => {
     dispatch({ type: 'SET_OPERATOR', payload: operator });
-    setDisplayValue(operator);
-    setCurrentValue('');
   };
 
   const handleEqualsClick = () => {
-    setDisplayValue(String(total));
+    dispatch({ type: 'CALCULATE_TOTAL' });
   };
+
+  const displayValue = ((typeof state === 'number')
+    ? state 
+    : (state.num2 === null ? state.operator : state.num2))
 
   return (
     <div className='inner'>
-      <div id="display">{displayValue.length === 0 ? '0' : displayValue}</div>
+      <div id="display">{displayValue}</div>
       <div className='buttons'>
         <div className='fat-col'>
           <div>
