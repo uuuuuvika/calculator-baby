@@ -1,8 +1,8 @@
 import { CalculatorAction } from './store/actions'
 
-export function calculateTotal(state: Expr | number): number {
-  if (typeof state === 'number') {
-    return state;
+export function calculateTotal(state: Expr | string): number {
+  if (typeof state === 'string') {
+    return Number(state);
   }
   const { num1, num2, operator } = state;
   if (num2 === null) {
@@ -23,39 +23,29 @@ export function calculateTotal(state: Expr | number): number {
 }
 
 export interface Expr {
-  num1: Expr | number;
-  num2: number | null;
+  num1: Expr | string;
+  num2: string | '';
   operator: string;
 }
 
-const initialState: Expr | number = 0;
+const initialState: Expr | string = '';
 
-const calculatorReducer = (state: Expr | number = initialState, action: CalculatorAction) => {
+const calculatorReducer = (state: Expr | string = initialState, action: CalculatorAction) => {
   console.log(state, "STATE");
   //console.log(action, "ACTION");
   switch (action.type) {
     case 'ADD_DIGIT':
-      if (typeof state === 'number') {
-        return Number(String(state) + action.payload);
-      } else if (typeof state === 'object' && state.num2 === -0 && action.payload.includes('.')) {
+      if (typeof state === 'string') {
+        return state + action.payload;
+      } 
+      else {
         return {
           ...state,
-          num2: Number('0' + action.payload),
-          operator: '-'
+          num2: state.num2 + action.payload
         }
-      } else if (typeof state === 'object' && state.num2 === -0 && !action.payload.includes('.')) {
-        return {
-          ...state,
-          num2: Number(String(state.num2) + action.payload) * -1
-        }
-      } else {
-        return {
-          ...state,
-          num2: Number(String(state.num2 || "0") + action.payload)
-        }
-      }
+      } 
     case 'SET_OPERATOR':
-      if (typeof state === 'object' && state.num2 === null && action.payload !== '-' ) {
+      if (typeof state === 'object' && state.num2 === ''  && action.payload !== '-'  ) {
         return {
           ...state,
           operator: action.payload
@@ -63,24 +53,24 @@ const calculatorReducer = (state: Expr | number = initialState, action: Calculat
       } else if (typeof state === 'object' && state.num2 === null && action.payload === '-' ) {
         return {
           ...state,
-          num2: -0
+          num2: '-'
         }
-      } else if (typeof state === 'object' && state.num2 === -0 ) {
+      } else if (typeof state === 'object' && state.num2 === '-' ) {
         return {
           ...state,
-          num2: null,
+          num2: '',
           operator: action.payload
         }
       }
       else {
         return {
               num1: state,
-              num2: null,
+              num2: '',
               operator: action.payload
              }
       }
     case 'CALCULATE_TOTAL':
-      return state = calculateTotal(state);
+      return state = String(calculateTotal(state));
     case 'CLEAR':
       return initialState;
     default:

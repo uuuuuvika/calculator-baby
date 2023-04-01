@@ -5,28 +5,17 @@ import { RootState } from './store/index';
 const Calculator: React.FC = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.calculator);
-  const [decimalOn, setDecimalOn] = useState(false);
-
+ 
   const handleClear = () => {
     dispatch({ type: 'CLEAR' });
   };
 
   const handleNumClick = (value: string) => {
-    if (decimalOn === true && value === '.') {
-      return;
-    }
-    if (decimalOn === true) {
-      dispatch({ type: 'ADD_DIGIT', payload: '.' + value });
-      setDecimalOn(false)
-    } else {
-      dispatch({ type: 'ADD_DIGIT', payload: value });
-    }
+    dispatch({ type: 'ADD_DIGIT', payload: value });
   };
 
   const handleDecimal = () => {
-    if (!decimalOn) {
-      setDecimalOn(true);
-    }
+    dispatch({ type: 'ADD_DIGIT', payload: '.' });
   };
 
   const handleOperatorClick = (operator: string) => {
@@ -38,19 +27,15 @@ const Calculator: React.FC = () => {
   };
 
   const displayValue = (
-    (typeof state === 'number' && decimalOn === true)
-    ? state + '.' 
-    : typeof state === 'number'
-      ? state
-      : (state.num2 === null 
-        ? state.operator 
-        : decimalOn === true 
-         ? state.num2 + '.' 
-          : state.num2))
+    typeof state === 'string'
+      ? state 
+        : state.num2 === ''
+          ? state.operator
+            : state.num2)
 
   return (
     <div className='inner'>
-      <div id="display">{displayValue}</div>
+      <div id="display">{state ? displayValue : '0'}</div>
       <div className='buttons'>
         <div className='fat-col'>
           <div>
