@@ -5,13 +5,14 @@
 }
 
 .App {
-  padding: 1.5%;
+  padding: 4.5mm;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   width: 280px;
+  height: fit-content;
   --clay-border-radius: 25px;
   background-color: rgb(98, 255, 0);
 }
@@ -24,6 +25,12 @@
   background-color: rgb(217, 255, 0);
   margin: 4px;
   box-shadow: 3px 3px 4px rgb(0, 115, 61);
+  cursor: pointer;
+  font-size: large;
+}
+
+.btn:hover, .b:hover, .bb:hover {
+  opacity: 0.8;
 }
 
 .b {
@@ -34,6 +41,8 @@
   margin-left: 3mm;
   background-color: rgb(217, 255, 0);
   box-shadow: 3px 3px 4px rgb(0, 81, 43);
+  cursor: pointer;
+  font-size: large;
 }
 
 .bb {
@@ -44,16 +53,21 @@
   margin-left: 3mm;
   background-color: rgb(217, 255, 0);
   box-shadow: 3px 3px 4px rgb(0, 81, 43);
+  cursor: pointer;
+  font-size: large;
 }
 
 #display {
   font-size: 1.5em;
   color: aliceblue;
-  height: 5vh;
+  height: fit-content;
   background-color: rgb(58, 58, 58);
   box-shadow: -3px -4px 2px rgb(0, 0, 0);
   margin-bottom: 4mm;
   border-radius: 10px;
+  text-align: end;
+  padding: 3mm;
+  line-break: anywhere;
 }
 
 .buttons {
