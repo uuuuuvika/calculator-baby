@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css2?family=Bangers&display=swap);$default-background:rgba(0,0,0,.005);$default-border-radius:32px;$default-shadow-outset:8px 8px 16px 0 rgba(0,0,0,.25);$default-shadow-inset-primary:-8px -8px 16px 0 rgba(0,0,0,.25);$default-shadow-inset-secondary:8px 8px 16px 0 hsla(0,0%,100%,.2);@mixin clay(
+  $background: $default-background,
+  $border-radius: $default-border-radius,
+  $shadow-outset: $default-shadow-outset,
+  $shadow-inset-primary: $default-shadow-inset-primary,
+  $shadow-inset-secondary: $default-shadow-inset-secondary
+){background:$background;border-radius:32px;border-radius:var(--clay-border-radius,32px);box-shadow:$shadow-outset,inset $shadow-inset-primary,inset $shadow-inset-secondary}.clay{@include clay(
+    $background: var(--clay-background, $default-background),
+    $border-radius: var(--clay-border-radius, $default-border-radius),
+    $shadow-outset: var(--clay-shadow-outset, $default-shadow-outset),
+    $shadow-inset-primary: var(--clay-shadow-inset-primary, $default-shadow-inset-primary),
+    $shadow-inset-secondary: var(--clay-shadow-inset-secondary, $default-shadow-inset-secondary)
+  )}*{font-family:Bangers,cursive}.App{--clay-border-radius:25px;background-color:#62ff00;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;left:50%;margin-right:-50%;padding:4.5mm;position:absolute;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:280px}.btn{--clay-border-radius:16px;background-color:#d9ff00;border:1mm;box-shadow:3px 3px 4px #00733d;cursor:pointer;font-size:large;height:60px;margin:4px;width:60px}.b:hover,.bb:hover,.btn:hover{opacity:.8}.b{height:128px}.b,.bb{--clay-border-radius:16px;background-color:#d9ff00;border:3mm;box-shadow:3px 3px 4px #00512b;cursor:pointer;font-size:large;margin-left:3mm;width:60px}.bb{height:196px}#display{background-color:#3a3a3a;border-radius:10px;box-shadow:-3px -4px 2px #000;color:#f0f8ff;font-size:1.5em;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;line-break:anywhere;margin-bottom:4mm;padding:3mm;text-align:end}.buttons{display:flex;flex-direction:row}.slimm-col{display:flex;flex-direction:column;justify-content:space-between;margin-bottom:4px;margin-top:4px}
+/*# sourceMappingURL=main.2fef4293.css.map*/
