@@ -69,7 +69,7 @@ const calculatorReducer = (state: Expr | string = initialState, action: Calculat
           ...state,
           num2: '',
           operator: action.payload
-        } // 5* -5
+        }
       } else {
         return {
           num1: state,
